@@ -1,5 +1,7 @@
 FROM node:latest
 
+RUN npm install --global nodemon
+
 # Create app directory
 WORKDIR /src/app
 
@@ -8,7 +10,7 @@ WORKDIR /src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install -g npm@8.4.0
+RUN npm install
 
 # Bundle app source
 COPY . .
