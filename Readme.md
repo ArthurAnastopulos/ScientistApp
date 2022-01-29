@@ -87,5 +87,5 @@ docker compose up
 
 ## Authors
 
-* Arthur Anastopulos dos Santos
-* Jefferson Romero Botitano
+* <a href="https://www.linkedin.com/in/arthur-anastopulos/">Arthur Anastopulos dos Santos</a>
+* <a href="https://www.linkedin.com/in/jefferson-botitano/">Jefferson Romero Botitano</a>
