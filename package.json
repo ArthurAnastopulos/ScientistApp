@@ -1,0 +1,22 @@
+{
+    "name": "ScientistApp",
+    "version": "1.0.0",
+    "description": "Application for the Sensors Database of the R2PJI2 Droid project.",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "nodejs",
+        "javascript",
+        "docker",
+        "express"
+    ],
+    "author": "Arthur Anastopulos dos Santos",
+    "license": "ISC",
+    "dependencies": {
+        "ejs": "^3.1.5",
+        "express": "^4.17.2",
+        "nodemon": "^2.0.15"
+    }
+}
