@@ -8,11 +8,12 @@ WORKDIR /src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
+RUN npm install -g npm@8.4.0
 
 # Bundle app source
 COPY . .
 
-EXPOSE 3000
+# ENV PORT=3000
+# EXPOSE $PORT
 
-CMD [ "node", "app.js" ]
+CMD [ "npm", "start" ]

@@ -4,7 +4,8 @@
     "description": "Application for the Sensors Database of the R2PJI2 Droid project.",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon app.js"
     },
     "keywords": [
         "nodejs",
@@ -16,7 +17,9 @@
     "license": "ISC",
     "dependencies": {
         "ejs": "^3.1.5",
-        "express": "^4.17.2",
+        "express": "^4.17.2"
+    },
+    "devDependencies": {
         "nodemon": "^2.0.15"
     }
 }
