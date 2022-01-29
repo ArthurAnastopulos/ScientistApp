@@ -33,6 +33,8 @@ docker compose up
 
 ## License
 
+<p align="left"> This project is under a [MIT](./LICENSE) license. <p>
+
 ## Authors
 
 * Arthur Anastopulos dos Santos
