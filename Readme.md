@@ -22,22 +22,64 @@
 
 ## How to Use
 
+To run this application under development, you will need to have <a href="https://www.docker.com/">Docker</a> and <a href="https://docs.docker.com/compose/">Docker Compose</a> installed on your linux computer. First let's start with installing the docker service:
+```bash
+
+# Uninstall (if any) of Docker
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+# Update package repository and install required packages
+sudo apt-get update
+sudo apt-get install apt-transport-https ca-certificates curl
+sudo apt-get install gnupg-agent software-properties-common
+
+# Add Docker GPG key in apt
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+#  Add Docker package repository in apt
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable"
+
+#  Install Docker
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+# Allow your regular system user (other than root) to be able to use Docker
+sudo usermod -aG docker $user-login
+
+    # restart the computer
+
+# Check if the installation completed successfully
+docker run hello-world
 ```
+
+Then we must install the docker compose service:
+```bash
+# Download Compose
+mkdir -p ~/.docker/cli-plugins
+
+curl -SL https://github.com/docker/compose/releases/download/v2.0.1/docker compose -linux-
+    x86_64 -o ~/.docker/cli-plugins/docker compose
+
+chmod +x ~/.docker/cli-plugins/docker compose
+
+# Check if the installation completed successfully
+docker compose version
+```
+
+Finally to start application type the following commands in your terminal:
+```bash
 docker compose build
 docker compose up
 ```
 
 ## Features
 
-- [x] Cadastro de usuário
-- [x] Cadastro de cliente
-- [ ] Cadastro de produtos
-- [x] Cadastro de usuário
-- [x] Cadastro de cliente
-- [ ] Cadastro de produtos
-- [x] Cadastro de usuário
-- [x] Cadastro de cliente
-- [ ] Cadastro de produtos
+- [ ] User registration
+- [ ] Remove User
+- [ ] Edit User Information
+- [ ] Robot Camera Streaming View
+- [ ] Sensor Analysis
+- [ ] Sensor Status Monitoring
 
 ## License
 
