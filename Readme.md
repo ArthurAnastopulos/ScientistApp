@@ -33,7 +33,7 @@ docker compose up
 
 ## License
 
-<p align="left"> This project is under a [MIT](./LICENSE) license. <p>
+<p align="left"> This project is under a <a href="./LICENSE">MIT</a> license. <p>
 
 ## Authors
 
