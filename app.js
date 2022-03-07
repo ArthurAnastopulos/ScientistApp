@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const request = require('request-promise');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 
@@ -18,7 +19,7 @@ const app = express();
 
 // configurantion =====================================================
 // connect to our database
-require('./script/create_database')
+// require('./script/create_database')
 require('./public/javascript/passport-config')(passport); // pass passport for configuration
 
 app.engine('ejs', ejsMate);

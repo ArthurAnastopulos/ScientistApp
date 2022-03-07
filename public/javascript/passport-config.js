@@ -3,12 +3,8 @@ const LocalStrategy = require('passport-local').Strategy
 // load up the user model
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2');
+const request = require('request-promise');
 const dbconfig = require('./database');
-const connection =  mysql.createPool(dbconfig.connection);
-
-//connection.connect();
-connection.query('USE ' + dbconfig.database);
-//connection.end();
 
 module.exports = function(passport) {
 
@@ -18,19 +14,12 @@ module.exports = function(passport) {
 
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
-    // console.log("serializeUser" + user.id)
-    done(null, user.id);
+    done(null, user.login);
   });
 
   // used to deserialize the user
-  passport.deserializeUser(function(id, done) {
-    //connection.connect();
-    console.log("deserializeUser" + id)
-    connection.query("SELECT * FROM " + dbconfig.users_table +" WHERE id = ?", [id], function(err, rows){
-        // console.log(rows)
-        done(err, rows[0]);
-    });
-    //connection.end();
+  passport.deserializeUser(function(login, done) {
+    done(null, login);
   });
 
   // local singup ==================================================
@@ -45,41 +34,28 @@ module.exports = function(passport) {
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, username, password, done) {
+    async function(req, username, password, done) {
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        //connection.connect();
-        connection.query("SELECT * FROM " + dbconfig.users_table + " WHERE username = ? ", [username], function(err, rows) {
-            if (err)
-                return done(err);
-            if (rows.length) {
-                return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
-            } else {
-                // if there is no user with that username
-                // create the user
-                var newUserMysql = {
-                    id: Date.now().toString(),
-                    username: username,
-                    password: bcrypt.hashSync(password, 10),  // use the generateHash function in our user model
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
-                    email: req.body.email
-                };
-
-                var insertQuery = "INSERT INTO users ( id, username, password, firstname, lastname, email ) values (?,?,?,?,?,?) ";
-                //connection.connect();
-                connection.query(insertQuery, [newUserMysql.id, newUserMysql.username, newUserMysql.password, newUserMysql.firstname, newUserMysql.lastname, newUserMysql.email], function(err, rows) {
-                    if (err) {
-                        return console.error(err.message);
-                    }
-                    // console.log("Query"+rows)
-                    // console.log("newUserMysql"+JSON.stringify(newUserMysql))
-                    return done(null, newUserMysql);
-                });
-                //connection.end();
-            }
+        var data = {
+            'login': username,
+            'senha': password, // use the generateHash function in our user model
+            'nome': req.body.firstname,
+            'sobrenome': req.body.lastname,
+            'email': req.body.email
+        };
+        var object = {
+            method: 'POST',
+            uri: 'http://192.168.15.9:5000/robo/1/register',
+            body: data,
+            json: true
+        };
+        var sendRequest = await request(object).then(function(parsedBody){
+            console.log(parsedBody)
+            return done(null, data);
+        }).catch(function(err){
+            return console.log(err);
         });
-        //connection.end();
     })
   );
 
@@ -90,29 +66,33 @@ module.exports = function(passport) {
   passport.use(
     'local-login',
     new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
+        // by default, local strategy uses username and password
         usernameField : 'username',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, username, password, done) { // callback with email and password from our form
-        //connection.connect();
-        connection.query("SELECT * FROM " + dbconfig.users_table + " WHERE username = ?", [username], function(err, rows){
-            if (err)
-                return done(err);
-            if (!rows.length) {
-                return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+    async function(req, username, password, done) { // callback with username and password from our form
+        var data = {
+            'login': username,
+            'senha': password,
+        }
+
+        var object = {
+            method: 'POST',
+            uri: 'http://192.168.15.9:5000/robo/1/login',
+            body: data,
+            json: true
+        }
+
+        var sendRequest = await request(object).then(function(parsedBody){
+            if(parsedBody['status'] === '400'){
+                console.log(parsedBody)
+                return done(null, false);
             }
-
-            // if the user is found but the password is wrong
-            const hash = bcrypt.hashSync(password, 10);
-            if (!bcrypt.compareSync(password, hash))
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-
-            // all is well, return successful user
-            return done(null, rows[0]);
+            return done(null, data);
+        }).catch(function(err){
+            return console.log(err);
         });
-        //connection.end();
     })
   );
   

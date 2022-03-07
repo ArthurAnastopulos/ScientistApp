@@ -5,7 +5,7 @@ module.exports = function(app, passport) {
         res.render('home', { message: req.flash('loginMessage') });
     });
 
-    app.post('/', passport.authenticate('local', {
+    app.post('/', passport.authenticate('local-login', {
         successRedirect: '/mainMenu',
         failureRedirect: '/',
         failureFlash: true
