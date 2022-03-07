@@ -2,9 +2,7 @@ const LocalStrategy = require('passport-local').Strategy
 
 // load up the user model
 const bcrypt = require('bcrypt');
-const mysql = require('mysql2');
 const request = require('request-promise');
-const dbconfig = require('./database');
 
 module.exports = function(passport) {
 
