@@ -22,7 +22,6 @@ const app = express();
 // require('./script/create_database')
 require('./public/javascript/passport-config')(passport); // pass passport for configuration
 
-
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
