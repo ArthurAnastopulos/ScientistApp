@@ -2,6 +2,7 @@ const sensorDistancia = document.getElementById("sensorDistancia");
 const sensorTemperatura = document.getElementById("sensorTemperatura");
 const sensorLuz = document.getElementById("sensorLuz");
 const sensorGas = document.getElementById("sensorGas");
+const sensorFumaca = document.getElementById("sensorFumaca");
 
 Chart.defaults.font.family = "Roboto";
 Chart.defaults.font.size = 22;
@@ -19,24 +20,37 @@ let plugin = {
     }
 }
 
+var checked_robot = '';
+var local = localStorage.getItem("current_robot");
+if(local === undefined || local === null || local === ''){
+    checked_robot = document.querySelector('input[name="robots"]:checked').value;
+    localStorage.setItem("current_robot", checked_robot);
+} else {
+    checked_robot = localStorage.getItem("current_robot");
+    var checkedBtn = document.getElementById('radio-robo-' + checked_robot);
+    checkedBtn.checked = true;
+}
+
+var luzChart = null;
+var gasChart = null;
+var temperaturaChart = null;
+var fumacaChart = null;
+var distanciaChart = null;
+
 //Sensor Distancia Request
 function call_1(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/1/sensorDistancia', true);
+        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorDistancia', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
-
-            console.log("Distancia: " + jsonResponse)
 
             var labelsName = [];
             var infoData = [];
 
             for(var i = 0; i < jsonResponse.length; i++) {
-                var obj = jsonResponse[i];
-
-                console.log(obj)        
+                var obj = jsonResponse[i];     
 
                 labelsName.push(obj['Data e Hora']);
                 infoData.push(obj['Informacao do Sensor']);
@@ -65,7 +79,7 @@ function call_1(){
                 }]
             };
 
-            const lineChart = new Chart(sensorDistancia, {
+            distanciaChart = new Chart(sensorDistancia, {
                 type: 'line',
                 data: data,
             });
@@ -79,19 +93,15 @@ function call_2(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/1/sensorLuz', true);
+        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorLuz', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
-
-            console.log("Distancia: " + jsonResponse)
 
             var labelsName = [];
             var infoData = [];
 
             for(var i = 0; i < jsonResponse.length; i++) {
-                var obj = jsonResponse[i];
-
-                console.log(obj)        
+                var obj = jsonResponse[i];       
 
                 labelsName.push(obj['Data e Hora']);
                 infoData.push(obj['Informacao do Sensor']);
@@ -120,7 +130,7 @@ function call_2(){
                 }]
             };
 
-            const lineChart = new Chart(sensorLuz, {
+            luzChart = new Chart(sensorLuz, {
                 type: 'line',
                 data: data,
             });
@@ -135,19 +145,15 @@ function call_3(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/1/sensorTemperatura', true);
+        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorTemperatura', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
-
-            console.log("Distancia: " + jsonResponse)
 
             var labelsName = [];
             var infoData = [];
 
             for(var i = 0; i < jsonResponse.length; i++) {
                 var obj = jsonResponse[i];
-
-                console.log(obj)        
 
                 labelsName.push(obj['Data e Hora']);
                 infoData.push(obj['Informacao do Sensor']);
@@ -176,7 +182,7 @@ function call_3(){
                 }]
             };
 
-            const lineChart = new Chart(sensorTemperatura, {
+            temperaturaChart = new Chart(sensorTemperatura, {
                 type: 'line',
                 data: data,
             });
@@ -190,20 +196,15 @@ function call_4(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/1/sensorGas', true);
+        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorGas', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
-
-            console.log("Distancia: " + jsonResponse)
 
             var labelsName = [];
             var infoData = [];
 
             for(var i = 0; i < jsonResponse.length; i++) {
                 var obj = jsonResponse[i];
-
-                console.log(obj)        
-
                 labelsName.push(obj['Data e Hora']);
                 infoData.push(obj['Informacao do Sensor']);
             }
@@ -231,7 +232,7 @@ function call_4(){
                 }]
             };
 
-            const lineChart = new Chart(sensorGas, {
+            sensorChart = new Chart(sensorGas, {
                 type: 'line',
                 data: data,
             });
@@ -240,11 +241,66 @@ function call_4(){
     });
 }
 
-Promise.all([ call_1(), call_2(), call_3(), call_4() ]).then(function(values) {
+//SensorFumaca
+function call_5(){
+    return new Promise(function(resolve, reject){
+        let req = new XMLHttpRequest();
+        req.overrideMimeType("application/json");
+        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorFumaca', true);
+        req.onload  = function() {
+            var jsonResponse = JSON.parse(req.responseText);
+
+            var labelsName = [];
+            var infoData = [];
+
+            for(var i = 0; i < jsonResponse.length; i++) {
+                var obj = jsonResponse[i];
+                labelsName.push(obj['Data e Hora']);
+                infoData.push(obj['Informacao do Sensor']);
+            }
+
+
+
+            let data = {
+                labels: labelsName,
+                datasets: [{
+                    label: "Sensor de Fumaça",
+                    data: infoData,
+                    cubicInterpolationMode: 'monotone',
+                    fill: false,
+                    fontColor: '#F5F5F5',
+                    borderColor: '#E64A19',
+                    backgroundColor: 'transparent',
+                    borderDash: [20, 10, 60, 10],
+                    pointBorderColor: '#E64A19',
+                    pointBackgroundColor: '#FFA726',
+                    pointRadius: 5,
+                    pointHoverRadius: 10,
+                    pointHitRadius: 30,
+                    pointBorderWidth: 4,
+                    pointStyle: 'rectRounded'
+                }]
+            };
+
+            fumacaChart = new Chart(sensorFumaca, {
+                type: 'line',
+                data: data,
+            });
+        };
+        req.send(null);
+    });
+}
+
+Promise.all([ call_1(), call_2(), call_3(), call_4(), call_5 ]).then(function(values) {
     // all AJAX requests are successfully finished
     // "values" is array containing AJAX responses of all requests
-    console.log(values);
 }).catch(function(reason) {
     // one of the AJAX calls failed
     console.log(reason);
 });
+
+function handleClick(radio){
+    checked_robot = radio.value
+    localStorage.setItem("current_robot", checked_robot);
+    location.reload();
+}

@@ -23,7 +23,7 @@
             <div class="link-box">
                 <div class="link-item">
                     <div class="link">Sing Out</div>
-                    <a href="#" class="link-icon"><i class="fas fa-sign-out-alt"></i></a>
+                    <a href="/logout" class="link-icon"><i class="fas fa-sign-out-alt"></i></a>
                 </div>
             </div>
         </nav>
@@ -35,9 +35,20 @@
                 <iframe width="420" height="315" src="https://www.youtube.com/embed/watch?v=W6h4bV4_hxQ?autoplay=1&mute=1" frameborder="0"> </iframe>
             </div>
         </div>
+        <!-- <input type="text" name="givenName" <% if(locals.givenName) {%> value="<%= givenName %>" <% } %>/><br/> -->
         <div class="info-wrapper">
             <div class="info-content" >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel accusantium est pariatur deserunt et quae quod? Explicabo eum quisquam vel sint ipsum fugiat unde laudantium doloribus incidunt itaque. Nam expedita, corrupti reiciendis architecto, alias id molestiae optio nemo molestias hic magnam provident qui obcaecati ipsa sit recusandae quos voluptate. Impedit nam numquam cum et aliquid aliquam illo, nisi saepe debitis maxime repellendus quod necessitatibus vero illum aperiam similique, doloribus quibusdam quae nesciunt. Enim, nesciunt voluptatum? Culpa dicta ipsa eius expedita quam excepturi eum repellat autem non. Magnam consequuntur distinctio officiis asperiores fugit laudantium exercitationem.
+                <h2 class="info-header">Informações Gerais dos Robôs </h2>
+                        <br>
+                        <div class="radio-robots">
+                        <% for(var i = 0; i < robots.length; i++) { %>
+                        <% var robot = robots[i]; %>
+                        <% if(i === 0) { %>  <input type="radio" id="radio-robo-<%= robot['Id'];%>" class='radio-robots' name="robots" value="<%= robot['Id'];%>" onclick="handleClick(this);" checked > <% } else {%>
+                        <input type="radio" id="radio-robo-<%= robot['Id'];%>" class='radio-robots' name="robots" onclick="handleClick(this);" value="<%= robot['Id'];%>" > <% } %>
+                        <label for="robots"><b>Robô <%= robot['Id'];%> - IP: <%= robot['Ip']%></b></label>
+                        <br><br><br>
+                        <% } %>
+                    </div>
             </div>
         </div>
         <div class="sensor-wrapper">
@@ -47,6 +58,7 @@
                     <canvas id="sensorTemperatura" width="400" height="400" ></canvas>
                     <canvas id="sensorLuz" width="400" height="400" ></canvas>
                     <canvas id="sensorGas" width="400" height="400" ></canvas>
+                    <canvas id="sensorFumaca" width="400" height="400" ></canvas>
                 </div>
             </div>
             

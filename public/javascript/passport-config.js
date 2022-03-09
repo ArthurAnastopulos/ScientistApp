@@ -49,7 +49,6 @@ module.exports = function(passport) {
             json: true
         };
         var sendRequest = await request(object).then(function(parsedBody){
-            console.log(parsedBody)
             return done(null, data);
         }).catch(function(err){
             return console.log(err);

@@ -43,7 +43,6 @@ app.use(flash()); // use connect-flash for flash messages stored in sessi
 app.use(methodOverride('_method'));
 
 // routes =================================================== 
-
 require('./routes/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 //  launch =================================================== 

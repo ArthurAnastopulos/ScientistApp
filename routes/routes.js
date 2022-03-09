@@ -1,3 +1,23 @@
+const request = require('request-promise');
+
+var robots = null;
+
+async function all_robots(){
+    var object = {
+      uri: 'http://192.168.15.9:5000/robos',
+      json: true // Automatically parses the JSON string in the response
+    };
+
+    var data = await request(object).then(function(parsedBody){
+        console.log(parsedBody)
+        robots = parsedBody;
+    }).catch(function(err){
+      return console.log(err);
+    });
+  } 
+  all_robots();
+
+
 module.exports = function(app, passport) {
     
     // home page (with login) ==================================================
@@ -34,11 +54,13 @@ module.exports = function(app, passport) {
     // main menu ==================================================
     app.get('/mainMenu', checkAuthenticated, (req, res) => {
         res.render('mainMenu', {
-            user : req.user // get the user out of session and pass to template
+            user : req.user, // get the user out of session and pass to template
+            robots: robots
         });
     });
 
-    app.delete('/logout', (req, res) => {
+    app.get('/logout', (req, res) => {
+        req.session.destroy()
         req.logOut()
         res.redirect('/')
     });
