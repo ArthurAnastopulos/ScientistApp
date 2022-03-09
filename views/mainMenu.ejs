@@ -15,7 +15,7 @@
     <script src="https://kit.fontawesome.com/cafda4e46d.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="main-body">
     
     <div class="navbar-container">
         <nav>
@@ -29,45 +29,91 @@
         </nav>
     </div>
 
-    <div class="menu-container">
-        <div class="streaming-wrapper">
-            <div class="streaming-content">
-                <iframe width="420" height="315" src="https://www.youtube.com/embed/watch?v=W6h4bV4_hxQ?autoplay=1&mute=1" frameborder="0"> </iframe>
-            </div>
-        </div>
-        <!-- <input type="text" name="givenName" <% if(locals.givenName) {%> value="<%= givenName %>" <% } %>/><br/> -->
-        <div class="info-wrapper">
-            <div class="info-content" >
-                <h2 class="info-header">Informações Gerais dos Robôs </h2>
-                        <br>
-                        <div class="radio-robots">
-                        <% for(var i = 0; i < robots.length; i++) { %>
-                        <% var robot = robots[i]; %>
-                        <% if(i === 0) { %>  <input type="radio" id="radio-robo-<%= robot['Id'];%>" class='radio-robots' name="robots" value="<%= robot['Id'];%>" onclick="handleClick(this);" checked > <% } else {%>
-                        <input type="radio" id="radio-robo-<%= robot['Id'];%>" class='radio-robots' name="robots" onclick="handleClick(this);" value="<%= robot['Id'];%>" > <% } %>
-                        <label for="robots"><b>Robô <%= robot['Id'];%> - IP: <%= robot['Ip']%></b></label>
-                        <br><br><br>
-                        <% } %>
+    <div class="content">
+        <div class="menu-container">
+            <div class="wrapper1">
+                <div class="streaming-wrapper">
+                    <div class="streaming-content">
+                        <iframe width="420" height="315" src="https://www.youtube.com/embed/watch?v=W6h4bV4_hxQ?autoplay=1&mute=1" frameborder="0"> </iframe>
                     </div>
-            </div>
-        </div>
-        <div class="sensor-wrapper">
-            <div class="sensor-content">
-                <div class="chart-box">
-                    <canvas id="sensorDistancia" width="400" height="400" ></canvas>
-                    <canvas id="sensorTemperatura" width="400" height="400" ></canvas>
-                    <canvas id="sensorLuz" width="400" height="400" ></canvas>
-                    <canvas id="sensorGas" width="400" height="400" ></canvas>
-                    <canvas id="sensorFumaca" width="400" height="400" ></canvas>
+                </div>
+                <!-- <input type="text" name="givenName" <% if(locals.givenName) {%> value="<%= givenName %>" <% } %>/><br/> -->
+                <div class="info-wrapper">
+                    <div class="info-content" >
+                        <h2 class="info-header">Informações Gerais dos Robôs </h2>
+                                <br>
+                                <div class="radio-robots">
+                                <% for(var i = 0; i < robots.length; i++) { %>
+                                <% var robot = robots[i]; %>
+                                <% if(i === 0) { %>  <input type="radio" id="radio-robo-<%= robot['Id'];%>" class='radio-robots' name="robots" value="<%= robot['Id'];%>" onclick="handleClick(this);" checked > <% } else {%>
+                                <input type="radio" id="radio-robo-<%= robot['Id'];%>" class='radio-robots' name="robots" onclick="handleClick(this);" value="<%= robot['Id'];%>" > <% } %>
+                                <label for="robots"><b>Robô <%= robot['Id'];%> - IP: <%= robot['Ip']%></b></label>
+                                <br><br><br>
+                                <% } %>
+                            </div>
+                    </div>
                 </div>
             </div>
-            
+            <div class="sensor-wrapper">
+                <div class="sensor-content">
+                    <div class="chart-box">
+                        <div class="chart-wrapper">
+                            <canvas id="sensorDistancia" width="400" height="400" ></canvas>
+                            <div class="link-item" onClick="downloadChartData('sensorDistancia');">
+                                <div class="link">Download</div>
+                                <a href="#" class="link-icon"><i class="fa-solid fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="sensorTemperatura" width="400" height="400" ></canvas>
+                            <div class="link-item" onClick="downloadChartData('sensorTemperatura');">
+                                <div class="link">Download</div>
+                                <a href="#" class="link-icon"><i class="fa-solid fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="sensorLuz" width="400" height="400" ></canvas>
+                            <div class="link-item" onClick="downloadChartData('sensorLuz');">
+                                <div class="link">Download</div>
+                                <a href="#" class="link-icon"><i class="fa-solid fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="sensorGas" width="400" height="400" ></canvas>
+                            <div class="link-item" onClick="downloadChartData('sensorGas');">
+                                <div class="link">Download</div>
+                                <a href="#" class="link-icon"><i class="fa-solid fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="sensorFumaca" width="400" height="400" ></canvas>
+                            <div class="link-item" onClick="downloadChartData('sensorFumaca');" >
+                                <div class="link">Download</div>
+                                <a href="#"  class="link-icon"><i class="fa-solid fa-download"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div class="left-sidebar">
+                <!-- sidebar 1 content -->
+        </div>
+
+
+        <div class="right-sidebar">
+            <!-- sidebar 2 content -->
         </div>
     </div>
+   
+	<footer>
+		<!-- footer content -->
+	</footer>
 
-    <!-- <div class="footer-container">
 
-    </div> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../public/javascript/chart.js"></script>
 </body>

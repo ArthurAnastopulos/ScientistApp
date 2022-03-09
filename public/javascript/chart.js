@@ -291,7 +291,7 @@ function call_5(){
     });
 }
 
-Promise.all([ call_1(), call_2(), call_3(), call_4(), call_5 ]).then(function(values) {
+Promise.all([ call_1(), call_2(), call_3(), call_4(), call_5() ]).then(function(values) {
     // all AJAX requests are successfully finished
     // "values" is array containing AJAX responses of all requests
 }).catch(function(reason) {
@@ -304,3 +304,32 @@ function handleClick(radio){
     localStorage.setItem("current_robot", checked_robot);
     location.reload();
 }
+
+function downloadChartData( sensor ){
+    let req = new XMLHttpRequest();
+        req.overrideMimeType("application/json");
+        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/' + sensor, true);
+        req.onload  = function() {
+            var jsonResponse = JSON.parse(req.responseText);
+
+            var text = '[' + '\n';
+
+            for(var i = 0; i < jsonResponse.length; i++) {
+                var obj = jsonResponse[i];
+                console.log(JSON.stringify(obj))
+                text = text + JSON.stringify(obj) + '\n';
+            }
+
+            text = text + ']';
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', sensor+'.json');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+            document.body.removeChild(element);
+        };
+        req.send(null);
+};
