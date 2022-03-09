@@ -66,20 +66,30 @@ chmod +x ~/.docker/cli-plugins/docker compose
 docker compose version
 ```
 
-Finally to start application type the following commands in your terminal:
+Finally to start application type the following commands in your terminal, first go to the folder `/script/BancoRobo`, then install all the requirement for the flask API, and execute the flask application:
+```bash
+cd script/BancoRobo/
+python3 app.py
+```
+After this just go back to the root of the project and start with:
 ```bash
 docker compose build
 docker compose up
 ```
 
+<b>OBS:</b> change in the ScientistApp application the html address for the FlaskAPI to for the one showing in your flask API. For exemple:
+```bash
+Running on http://192.168.15.9:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 949-485-332
+```
+This flask is running in the: `http://192.168.15.9:5000/`, so you have to change all `flaskAPI` constants in the code to the correct address. TIP:`files are: route.js, passport-config.js, chart.js`
 ## Features
 
-- [ ] User registration
-- [ ] Remove User
-- [ ] Edit User Information
+- [X] User registration
 - [ ] Robot Camera Streaming View
-- [ ] Sensor Analysis
-- [ ] Sensor Status Monitoring
+- [X] Sensor Analysis
 
 ## License
 

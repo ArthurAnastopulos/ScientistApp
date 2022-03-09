@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy
+const flaskAPI = '192.168.15.9:5000';
 
 // load up the user model
 const bcrypt = require('bcrypt');
@@ -44,12 +45,17 @@ module.exports = function(passport) {
         };
         var object = {
             method: 'POST',
-            uri: 'http://192.168.15.9:5000/robo/1/register',
+            uri: 'http://'+ flaskAPI +'/robo/1/register',
             body: data,
             json: true
         };
         var sendRequest = await request(object).then(function(parsedBody){
-            return done(null, data);
+            if(parsedBody['status'] == '400'){
+                return done(null);
+            }
+            else{
+                return done(null, data);
+            }
         }).catch(function(err){
             return console.log(err);
         });
@@ -76,7 +82,7 @@ module.exports = function(passport) {
 
         var object = {
             method: 'POST',
-            uri: 'http://192.168.15.9:5000/robo/1/login',
+            uri: 'http://'+ flaskAPI +'/robo/1/login',
             body: data,
             json: true
         }

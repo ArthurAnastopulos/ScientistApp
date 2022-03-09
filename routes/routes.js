@@ -1,15 +1,15 @@
 const request = require('request-promise');
+const flaskAPI = '192.168.15.9:5000';
 
 var robots = null;
 
 async function all_robots(){
     var object = {
-      uri: 'http://192.168.15.9:5000/robos',
+      uri: 'http://'+ flaskAPI +'/robos',
       json: true // Automatically parses the JSON string in the response
     };
 
     var data = await request(object).then(function(parsedBody){
-        console.log(parsedBody)
         robots = parsedBody;
     }).catch(function(err){
       return console.log(err);
@@ -63,6 +63,11 @@ module.exports = function(app, passport) {
         req.session.destroy()
         req.logOut()
         res.redirect('/')
+    });
+
+    // about ==================================================
+    app.get('/about', (req, res) => {
+        res.render('about')
     });
 
 

@@ -4,6 +4,8 @@ const sensorLuz = document.getElementById("sensorLuz");
 const sensorGas = document.getElementById("sensorGas");
 const sensorFumaca = document.getElementById("sensorFumaca");
 
+const flaskAPI = '192.168.15.9:5000';
+
 Chart.defaults.font.family = "Roboto";
 Chart.defaults.font.size = 22;
 Chart.defaults.color = "#F5F5F5";
@@ -42,7 +44,7 @@ function call_1(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorDistancia', true);
+        req.open('GET', 'http://'+ flaskAPI +'/robo/'+ checked_robot +'/sensorDistancia', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
 
@@ -93,7 +95,7 @@ function call_2(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorLuz', true);
+        req.open('GET', 'http://'+ flaskAPI +'/robo/'+ checked_robot +'/sensorLuz', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
 
@@ -145,7 +147,7 @@ function call_3(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorTemperatura', true);
+        req.open('GET', 'http://'+ flaskAPI +'/robo/'+ checked_robot +'/sensorTemperatura', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
 
@@ -196,7 +198,7 @@ function call_4(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorGas', true);
+        req.open('GET', 'http://'+ flaskAPI +'/robo/'+ checked_robot +'/sensorGas', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
 
@@ -246,7 +248,7 @@ function call_5(){
     return new Promise(function(resolve, reject){
         let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/sensorFumaca', true);
+        req.open('GET', 'http://'+ flaskAPI +'/robo/'+ checked_robot +'/sensorFumaca', true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
 
@@ -308,7 +310,7 @@ function handleClick(radio){
 function downloadChartData( sensor ){
     let req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', 'http://192.168.15.9:5000/robo/'+ checked_robot +'/' + sensor, true);
+        req.open('GET', 'http://'+ flaskAPI +'/robo/'+ checked_robot +'/' + sensor, true);
         req.onload  = function() {
             var jsonResponse = JSON.parse(req.responseText);
 

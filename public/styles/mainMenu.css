@@ -37,6 +37,13 @@ nav {
      font-size:1.2em;
 }
 
+.img-logo {
+    height: 2%;
+    width: 10%;
+    margin-right: 5%;
+    margin-bottom: -3%;
+}
+
 .link-box{
     display: flex;
     gap: 15px;
@@ -145,6 +152,7 @@ nav {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 15px;
     padding: 20px;
+    padding-right: 160px;
     color: inherit;
     animation: zoom 0.5s ease-in;
     text-align: center;

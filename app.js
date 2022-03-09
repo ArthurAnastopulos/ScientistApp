@@ -45,6 +45,10 @@ app.use(methodOverride('_method'));
 // routes =================================================== 
 require('./routes/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404))
+})
+
 //  launch =================================================== 
 
 app.listen(port, () => {
